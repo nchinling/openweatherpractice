@@ -1,11 +1,44 @@
 package sg.nus.iss.edu.openweather.model;
 
 import java.io.Serializable;
+import jakarta.json.JsonObject;
+
 
 public class WeatherCondition implements Serializable {
     
     private String mainWeather;
     private String description;
+
+    
+    public WeatherCondition() {}
+
+    public WeatherCondition(String mainWeather, String description) {
+        this.mainWeather = mainWeather;
+        this.description = description;
+    }
+
+    public String getMainWeather() {return mainWeather;}
+    public void setMainWeather(String mainWeather) {this.mainWeather = mainWeather;}
+
+    public String getDescription() {return description;}
+    public void setDescription(String description) {this.description = description;}
+
+
+    public static WeatherCondition createFromJson(JsonObject j) {
+        WeatherCondition wc = new WeatherCondition();
+        // wc.mainWeather = "%s - %s"
+        // .formatted(j.getString("main"), j.getString("description"));
+
+        wc.mainWeather = j.getString("main");
+        wc.description = j.getString("description");
+        
+
+        return wc;
+    }
+
+    
+
+    
    
 
 

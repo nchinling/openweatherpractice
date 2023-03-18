@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 
@@ -38,8 +39,6 @@ public class Weather implements Serializable {
         this.temperature = temperature;
         this.weathercondition = weathercondition;
     }
-
-    
 
 
     public Weather(String city, String temperature, String visibility, Long sunriseTime, Long sunsetTime,
@@ -73,7 +72,6 @@ public class Weather implements Serializable {
         this.weathercondition = weathercondition;}
 
 
-
     //convert json to Java object
     public static Weather create(String json) throws IOException {
         Weather w = new Weather();
@@ -87,21 +85,15 @@ public class Weather implements Serializable {
             JsonObject sys = o.getJsonObject("sys");
             w.setSunriseTime(sys.getJsonNumber("sunrise").longValue());
             w.setSunsetTime(sys.getJsonNumber("sunset").longValue());
+
+            w.weathercondition = o.getJsonArray("weather").stream()
+            .map(v-> (JsonObject)v)
+            .map(v-> WeatherCondition.createFromJson(v))
+            .toList();
+            
         }
 
         return w;
     }
-
-    // long sunriseTimeUnix = 1647625182; // Unix timestamp in seconds
-    // LocalDateTime sunriseTimeUTC = LocalDateTime.ofEpochSecond(sunriseTimeUnix, 0, ZoneOffset.UTC);
-    // ZoneId localZone = ZoneId.systemDefault();
-    // LocalDateTime sunriseTimeLocal = sunriseTimeUTC.atZone(ZoneOffset.UTC).withZoneSameInstant(localZone).toLocalDateTime();
-    // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    // String sunriseTimeLocalString = sunriseTimeLocal.format(formatter);
-    // System.out.println("Local sunrise time: " + sunriseTimeLocalString);
-
-    
-
-    
     
 }

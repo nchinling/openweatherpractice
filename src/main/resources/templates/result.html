@@ -29,6 +29,15 @@
             </tr>
             <br>
             <tr>
+                <td><h2>Weather Condition</h2></td>
+                <td><h2 data-th-text="*{weathercondition.get(0).mainWeather}"></h2></td>
+            </tr>
+            <tr>
+                <td><h2>Weather Description</h2></td>
+                <td><h2 data-th-text="*{weathercondition.get(0).description}"></h2></td>
+            </tr>
+            <br>
+            <tr>
                 <td><h2>Sunrise Time</h2></td>
                 <td><h2 data-th-text="*{#dates.format(sunriseTime * 1000, 'HH:mm:ss dd-MM-yyyy')}"></h2></td>
             </tr>
