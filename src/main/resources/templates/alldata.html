@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Lists</title>
+</head>
+<body>
+    <h1> All weather data </h1>
+
+    <table>
+        <tr data-th-each="w : ${datalist}">
+            <td>
+                <a data-th-href="@{'/weather/' + ${w.dataId}}"
+                data-th-text="${w.dataId}" >
+            </td>
+            <td><p data-th-text="*{w.city}"></p></td>
+            <td><p data-th-text="*{w.temperature} + ' deg C'"></p></td>
+            <td><p data-th-text="*{w.visibility} + ' m'"></p></td>
+          
+        </tr>
+
+    </table>
+</body>
+</html>
