@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>The Weather Page</title>
+</head>
+<body data-th-object="${weather}">
+    <img src ="/images/deco.jpg" width="100%" height="300">
+    <div class="container" align="center">
+        <h1>The Weather App</h1>
+
+        <table>
+            <tr>
+                <td><h2>City</h2></td>
+                <td><h2 data-th-text="*{city}"></h2></td>
+            </tr>
+            <br>
+            <tr>
+                <td><h2>Temperature</h2></td>
+                <td><h2 data-th-text="*{temperature} + ' deg C'"></h2></td>
+            </tr>
+            <br>
+            <tr>
+                <td><h2>Visibility</h2></td>
+                <td><h2 data-th-text="*{visibility} + ' m'"></h2></td>
+            </tr>
+            <br>
+            <tr>
+                <td><h2>Sunrise Time</h2></td>
+                <td><h2 data-th-text="*{#dates.format(sunriseTime * 1000, 'HH:mm:ss dd-MM-yyyy')}"></h2></td>
+            </tr>
+            <br>
+            <tr>
+                <td><h2>Sunset Time</h2></td>
+                <td><h2 data-th-text="*{#dates.format(sunsetTime * 1000, 'HH:mm:ss dd-MM-yyyy')}"></h2></td>
+            </tr>
+            <br>
+        </table>
+
+    </div>
+</body>
+</html>
