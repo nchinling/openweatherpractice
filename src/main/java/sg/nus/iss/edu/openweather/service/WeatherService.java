@@ -3,6 +3,7 @@ package sg.nus.iss.edu.openweather.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,8 @@ public class WeatherService {
     private String openWeatherApiKey;
 
     public void save(final Weather weather){
+        String orderId = UUID.randomUUID().toString().substring(0,8);
+        weather.setDataId(orderId);
         weatherrepo.save(weather);
     }
 
@@ -38,7 +41,7 @@ public class WeatherService {
     }  
 
 
-
+    //function to get info from an external server using API.
     public Optional<Weather> getWeather(String city, String unitMeasurement, String language)
     throws IOException{
         System.out.println("openWeatherUrl: " + openWeatherUrl);

@@ -4,12 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
@@ -116,23 +116,28 @@ public class Weather implements Serializable {
             .toList();
             
         }
-
-        w.setDataId(generateId(8));
         return w;
     }
 
-    public static Weather createUserObjectFromRedis(String json) throws IOException{
+    public static Weather createUserObjectFromRedis(String jsonStr) throws IOException{
         Weather w = new Weather();
-        try(InputStream is = new ByteArrayInputStream(json.getBytes())) {
-            JsonReader r = Json.createReader(is);
-            JsonObject o = r.readObject();
+        try(InputStream is = new ByteArrayInputStream(jsonStr.getBytes())) {
+            JsonObject o = toJSON(jsonStr);
             w.setCity(o.getString("city"));
             w.setDataId(o.getString("dataId"));
             w.setTemperature(o.getString("temperature"));
             w.setVisibility(o.getString("visibility"));
+            w.setSunriseTime(o.getJsonNumber("sunriseTime").longValue());
+            w.setSunsetTime(o.getJsonNumber("sunsetTime").longValue());
+            w.setWeathercondition((List)o.getJsonArray("weathercondition"));
         }
-
+   
         return w;
+    }
+
+    public static JsonObject toJSON(String json){
+        JsonReader r = Json.createReader(new StringReader(json));
+        return r.readObject();
     }
 
     public JsonObject toJSON(){
