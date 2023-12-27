@@ -58,6 +58,7 @@ public class WeatherService {
         RestTemplate template= new RestTemplate();
         ResponseEntity<String> r  = template.getForEntity(weatherUrl, 
                 String.class);
+        //r.getBody is a string response from api.
         Weather w = Weather.createUserObject(r.getBody());
         if(w != null)
             return Optional.of(w);

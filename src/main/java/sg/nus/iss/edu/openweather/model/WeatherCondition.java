@@ -5,6 +5,7 @@ import jakarta.json.JsonObject;
 
 
 public class WeatherCondition implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     private String mainWeather;
     private String description;
@@ -23,23 +24,31 @@ public class WeatherCondition implements Serializable {
     public String getDescription() {return description;}
     public void setDescription(String description) {this.description = description;}
 
+    // public static WeatherCondition createFromJson(JsonObject j) {
+    //     WeatherCondition wc = new WeatherCondition();
+        
+    //     // wc.mainWeather = "%s - %s"
+    //     // .formatted(j.getString("main"), j.getString("description"));
+
+    //     wc.mainWeather = j.getString("main");
+    //     wc.description = j.getString("description");
+        
+
+    //     return wc;
+    // }
 
     public static WeatherCondition createFromJson(JsonObject j) {
         WeatherCondition wc = new WeatherCondition();
+        
         // wc.mainWeather = "%s - %s"
         // .formatted(j.getString("main"), j.getString("description"));
 
-        wc.mainWeather = j.getString("main");
-        wc.description = j.getString("description");
+        wc.setMainWeather(j.getString("main"));
+        wc.setDescription(j.getString("description"));
         
-
         return wc;
     }
 
-    
-
-    
-   
 
 
 

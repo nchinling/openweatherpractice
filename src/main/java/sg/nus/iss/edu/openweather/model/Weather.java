@@ -23,12 +23,11 @@ public class Weather implements Serializable {
     private String visibility;
     private Long sunriseTime;
     private Long sunsetTime;
-
-
+    //List is used because the JSON data has an array 
     private List<WeatherCondition> weathercondition = new LinkedList<>();
 
-      //need to implement id for redis db.
-      private String dataId;
+    //need to implement id for insertion into redis
+    private String dataId;
 
     
     public Weather() {}
@@ -109,11 +108,14 @@ public class Weather implements Serializable {
             JsonObject sys = o.getJsonObject("sys");
             w.setSunriseTime(sys.getJsonNumber("sunrise").longValue());
             w.setSunsetTime(sys.getJsonNumber("sunset").longValue());
-
-            w.weathercondition = o.getJsonArray("weather").stream()
+            // w.weathercondition = o.getJsonArray("weather").stream()
+            // .map(v-> (JsonObject)v)
+            // .map(v-> WeatherCondition.createFromJson(v))
+            // .toList();
+            w.setWeathercondition(o.getJsonArray("weather").stream()
             .map(v-> (JsonObject)v)
             .map(v-> WeatherCondition.createFromJson(v))
-            .toList();
+            .toList());
             
         }
         return w;
@@ -130,6 +132,11 @@ public class Weather implements Serializable {
             w.setSunriseTime(o.getJsonNumber("sunriseTime").longValue());
             w.setSunsetTime(o.getJsonNumber("sunsetTime").longValue());
             w.setWeathercondition((List)o.getJsonArray("weathercondition"));
+            // below doesn't work.
+            // w.setWeathercondition(o.getJsonArray("weathercondition").stream()
+            // .map(v-> (JsonObject)v)
+            // .map(v-> WeatherCondition.createFromJson(v))
+            // .toList());
         }
    
         return w;

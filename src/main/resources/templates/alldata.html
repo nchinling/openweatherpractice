@@ -8,20 +8,27 @@
     <title>Lists</title>
 </head>
 <body>
+    <div class="box">
     <h1> All weather data </h1>
 
     <table>
         <tr data-th-each="w : ${datalist}">
             <td>
                 <a data-th-href="@{'/weather/' + ${w.dataId}}"
-                data-th-text="${w.dataId}" >
+                   data-th-text="${w.dataId}" >
             </td>
             <td><p data-th-text="*{w.city}"></p></td>
             <td><p data-th-text="*{w.temperature} + ' deg C'"></p></td>
             <td><p data-th-text="*{w.visibility} + ' m'"></p></td>
+            <td><p data-th-text="*{#dates.format(w.sunriseTime * 1000, 'HH:mm:ss dd-MM-yyyy')}"></p></td>
+            <td><p data-th-text="*{#dates.format(w.sunsetTime * 1000, 'HH:mm:ss dd-MM-yyyy')}"></p></td>
+            <td><p data-th-text="*{w.weathercondition.get(0).description}"></p></td>
+            <td><p data-th-text="*{w.weathercondition.get(0).mainWeather}"></p></td>
+
           
         </tr>
 
     </table>
+    </div>
 </body>
 </html>

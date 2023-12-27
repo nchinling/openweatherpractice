@@ -31,6 +31,7 @@ public class WeatherRepo {
         List<Weather> weatherarray = new LinkedList<>();
         for (String key : allKeys) {
             String result = template.opsForValue().get(key);
+            System.out.println(">>>>>>>>" + result);
 
             weatherarray.add(Weather.createUserObjectFromRedis(result));
         }
@@ -45,6 +46,7 @@ public class WeatherRepo {
             return Optional.empty();
         }
 
+        //creates a Weather object. 
         return Optional.of(Weather.createUserObjectFromRedis(json));
     }
 
